@@ -6,6 +6,16 @@ use Zend\View\Helper\AbstractHelper;
 
 class React extends AbstractHelper
 {
+    /** @var ReactRenderer $renderer */
+    private $renderer;
+
+    private $wrapper = 'div';
+
+    public function __construct($renderer)
+    {
+        $this->renderer = $renderer;
+    }
+
     /**
      * Render a react component's markup and store it's js for mounting later
      *
@@ -22,5 +32,10 @@ class React extends AbstractHelper
             sprintf('document.getElementById("%s")', $containerId)
         );
         return sprintf($this->getWrapper(), $containerId, $this->renderer->render($componentName, $data));
+    }
+
+    public function getWrapper()
+    {
+        return $this->wrapper;
     }
 }

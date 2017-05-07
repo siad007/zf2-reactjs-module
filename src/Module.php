@@ -2,34 +2,31 @@
 
 namespace Siad007\ZF2\ReactJsModule;
 
-use Siad007\ZF2\ReactJsModule\Service\ReactRendererStrategyFactory;
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
-class Module implements ConfigProviderInterface, ServiceProviderInterface
+class Module implements ServiceProviderInterface, ViewHelperProviderInterface
 {
-    /**
-     * @inheritdoc
-     */
-    public function getConfig()
-    {
-        return include __DIR__ . '/../config/module.config.php';
-    }
-
     /**
      * @inheritdoc
      */
     public function getServiceConfig()
     {
         return [
-            'aliases' => [
-                'ViewReactRenderer' => Renderer\ReactRenderer::class,
-                'ViewReactStrategy' => Strategy\ReactRendererStrategy::class
-            ],
             'factories' => [
-                Renderer\ReactRenderer::class => Service\ViewReactRendererFactory::class,
-                Strategy\ReactRendererStrategy::class => ReactRendererStrategyFactory::class,
+                Renderer\ReactRenderer::class => Service\ViewReactRendererFactory::class
             ]
         ];
+    }
+
+    /**
+     * Expected to return \Zend\ServiceManager\Config object or array to
+     * seed such an object.
+     *
+     * @return array|\Zend\ServiceManager\Config
+     */
+    public function getViewHelperConfig()
+    {
+        return [];
     }
 }
