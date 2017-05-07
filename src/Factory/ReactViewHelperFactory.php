@@ -1,20 +1,26 @@
 <?php
 
-namespace Siad007\ZF2\ReactJsModule\Renderer;
+namespace Siad007\ZF2\ReactJsModule\Factory;
 
 use ReactJS;
 use Siad007\ZF2\ReactJsModule\Exception\FileNotReadableException;
+use Siad007\ZF2\ReactJsModule\View\Helper\React;
 use Zend\ServiceManager\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ReactJsFactory implements FactoryInterface
+class ReactViewHelperFactory implements FactoryInterface
 {
     /**
      * @param  ContainerInterface $container
      * @param  string $name
      * @param  null|array $options
+     *
      * @return ReactJs
+     *
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Siad007\ZF2\ReactJsModule\Exception\FileNotReadableException
      */
     public function __invoke(ContainerInterface $container, $name, array $options = null)
     {
@@ -24,10 +30,14 @@ class ReactJsFactory implements FactoryInterface
         }
 
         $config = $container->get('config');
-        if (isset($config['view_helper_config']['asset'])) {
-            $reactPath = '';
-            $componentsPath = '';
-        }
+
+        $reactPath = isset($config['view_helper_config']['zf2reactjsmodule']['react_path'])
+            ? $config['view_helper_config']['zf2reactjsmodule']['react_path']
+            : null;
+
+        $componentsPath = isset($config['view_helper_config']['zf2reactjsmodule']['components_path'])
+            ? $config['view_helper_config']['zf2reactjsmodule']['components_path']
+            : null;
 
         if (!is_readable($reactPath)) {
             throw new FileNotReadableException(sprintf('React path "%s" is not readable.', $reactPath));
@@ -51,6 +61,6 @@ class ReactJsFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $container)
     {
-        return $this($container, ReactJS::class);
+        return $this($container, React::class);
     }
 }

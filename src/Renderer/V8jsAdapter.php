@@ -10,6 +10,7 @@ class V8jsAdapter implements AdapterInterface
      * @var ReactJS
      */
     private $react;
+
     /**
      * @param ReactJS $react
      */
@@ -17,6 +18,7 @@ class V8jsAdapter implements AdapterInterface
     {
         $this->react = $react;
     }
+
     /**
      * @param string $component Name of component
      * @param array  $data      Data to pass to the component

@@ -21,9 +21,12 @@ class ExternalAdapter implements AdapterInterface
 
     /**
      * @param string $component Name of component to render
-     * @param array  $data      Data to be passed to the component
+     * @param array $data Data to be passed to the component
      *
      * @return string
+     *
+     * @throws \Zend\Http\Exception\RuntimeException
+     * @throws \Zend\Http\Client\Exception\RuntimeException
      */
     public function render($component, array $data = [])
     {

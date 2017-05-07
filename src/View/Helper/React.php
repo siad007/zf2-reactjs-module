@@ -1,8 +1,9 @@
 <?php
 
-namespace Siad007\ZF2\ReactJsModule\Renderer;
+namespace Siad007\ZF2\ReactJsModule\View\Helper;
 
 use Siad007\ZF2\ReactJsModule\Exception\ComponentNotRenderedException;
+use Siad007\ZF2\ReactJsModule\Renderer\ReactRenderer;
 use Zend\View\Helper\AbstractHelper;
 
 class React extends AbstractHelper
@@ -10,7 +11,7 @@ class React extends AbstractHelper
     /** @var ReactRenderer $renderer */
     private $renderer;
 
-    private $tag = 'div';
+    private $tag;
 
     /**
      * @var array
@@ -32,7 +33,7 @@ class React extends AbstractHelper
      *
      * @return string
      */
-    public function renderReactComponent($componentName, $containerId, $data = [])
+    public function renderReactComponent($componentName, $containerId, array $data = [])
     {
         $this->componentsJs[$componentName] = $this->renderer->getRenderJs(
             $componentName,
@@ -55,6 +56,10 @@ class React extends AbstractHelper
      * Mount a single react component
      *
      * @param string $componentName
+     *
+     * @return mixed
+     *
+     * @throws \Siad007\ZF2\ReactJsModule\Exception\ComponentNotRenderedException
      */
     public function renderReactComponentJs($componentName)
     {
@@ -65,6 +70,7 @@ class React extends AbstractHelper
         }
         return $this->componentsJs[$componentName];
     }
+
     /**
      * @return string
      */

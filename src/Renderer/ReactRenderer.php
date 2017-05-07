@@ -8,6 +8,7 @@ class ReactRenderer
      * @var AdapterInterface
      */
     private $adapter;
+
     /**
      * @param AdapterInterface $adapter
      */
@@ -15,9 +16,10 @@ class ReactRenderer
     {
         $this->adapter = $adapter;
     }
+
     /**
      * @param string $component Name of the component to render
-     * @param array  $data      Data to pass to the component
+     * @param array $data Data to pass to the component
      *
      * @return string
      */
@@ -28,19 +30,18 @@ class ReactRenderer
 
     /**
      * @param string $component Name of component
-     * @param string $where     Id of container in which component is rendered
-     * @param array  $data      Data to be passed to the component
+     * @param string $where Id of container in which component is rendered
+     * @param array $data Data to be passed to the component
      *
      * @return string
      */
     public function getRenderJs($component, $where, array $data = [])
     {
-        return
-            sprintf(
-                'React.render(React.createElement(%s, %s), %s);',
-                $component,
-                json_encode($data),
-                $where
-            );
+        return sprintf(
+            'React.render(React.createElement(%s, %s), %s);',
+            $component,
+            json_encode($data),
+            $where
+        );
     }
 }
