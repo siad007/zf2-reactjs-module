@@ -22,6 +22,10 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
     public function getServiceConfig()
     {
         return [
+            'aliases' => [
+                'ViewReactRenderer' => Renderer\ReactRenderer::class,
+                'ViewReactStrategy' => Strategy\ReactRendererStrategy::class
+            ],
             'factories' => [
                 Renderer\ReactRenderer::class => Service\ViewReactRendererFactory::class,
                 Strategy\ReactRendererStrategy::class => ReactRendererStrategyFactory::class,
