@@ -33,6 +33,9 @@ class Module implements ServiceProviderInterface, ViewHelperProviderInterface
     public function getViewHelperConfig()
     {
         return [
+            'aliases' => [
+                'react' => React::class
+            ],
             'invokables' => [
                 React::class => ReactViewHelperFactory::class
             ]
