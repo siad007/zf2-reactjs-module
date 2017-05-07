@@ -3,19 +3,21 @@
 namespace Siad007\ZF2\ReactJsModule\Factory;
 
 use ReactJS;
+use Siad007\ZF2\ReactJsModule\Exception\InvalidConfigurationException;
 use Siad007\ZF2\ReactJsModule\Exception\FileNotReadableException;
+use Siad007\ZF2\ReactJsModule\Renderer\ReactRenderer;
 use Zend\ServiceManager\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ReactJsFactory implements FactoryInterface
+class ReactRendererFactory implements FactoryInterface
 {
     /**
      * @param  ContainerInterface $container
      * @param  string $name
      * @param  null|array $options
      *
-     * @return ReactJs
+     * @return ReactRenderer
      *
      * @throws \Psr\Container\NotFoundExceptionInterface
      * @throws \Psr\Container\ContainerExceptionInterface
@@ -30,24 +32,25 @@ class ReactJsFactory implements FactoryInterface
 
         $config = $container->get('config');
 
-        $reactPath = isset($config['view_helper_config']['zf2reactjsmodule']['react_path'])
-            ? $config['view_helper_config']['zf2reactjsmodule']['react_path']
-            : null;
-
-        $componentsPath = isset($config['view_helper_config']['zf2reactjsmodule']['components_path'])
-            ? $config['view_helper_config']['zf2reactjsmodule']['components_path']
-            : null;
-
-        if (!is_readable($reactPath)) {
-            throw new FileNotReadableException(sprintf('React path "%s" is not readable.', $reactPath));
+        if (!isset($config['zf2reactjsmodule']['render_method'])) {
+            throw new InvalidConfigurationException('You must set the "render_method" key.');
         }
-        if (!is_readable($componentsPath)) {
-            throw new FileNotReadableException(sprintf('Components path "%s" is not readable.', $componentsPath));
-        }
-        $react = file_get_contents($reactPath);
-        $js = file_get_contents($componentsPath);
 
-        return new ReactJS($react, $js);
+        if ('external' === $config['zf2reactjsmodule']['render_method']) {
+            if (!isset($config['zf2reactjsmodule']['render_url'])) {
+                throw new InvalidConfigurationException(
+                    'You must set the "render_url" key if "render_method" is "external".'
+                );
+            }
+
+
+        } elseif ('v8js' !== $config['zf2reactjsmodule']['render_method']) {
+
+        } else {
+            throw new InvalidConfigurationException('You must set the "render_method" key to either "v8js" or "external".');
+        }
+
+        return new ReactRenderer($container->get(ReactAdapter::class));
     }
 
     /**
@@ -57,7 +60,7 @@ class ReactJsFactory implements FactoryInterface
      *
      * @param ServiceLocatorInterface $container
      *
-     * @return ReactJs
+     * @return ReactRenderer
      */
     public function createService(ServiceLocatorInterface $container)
     {

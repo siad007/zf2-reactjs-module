@@ -24,31 +24,8 @@ class ReactViewHelperFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $name, array $options = null)
     {
-        // test if we are using Zend\ServiceManager v2 or v3
-        if (! method_exists($container, 'configure')) {
-            $container = $container->getServiceLocator();
-        }
 
-        $config = $container->get('config');
-
-        $reactPath = isset($config['view_helper_config']['zf2reactjsmodule']['react_path'])
-            ? $config['view_helper_config']['zf2reactjsmodule']['react_path']
-            : null;
-
-        $componentsPath = isset($config['view_helper_config']['zf2reactjsmodule']['components_path'])
-            ? $config['view_helper_config']['zf2reactjsmodule']['components_path']
-            : null;
-
-        if (!is_readable($reactPath)) {
-            throw new FileNotReadableException(sprintf('React path "%s" is not readable.', $reactPath));
-        }
-        if (!is_readable($componentsPath)) {
-            throw new FileNotReadableException(sprintf('Components path "%s" is not readable.', $componentsPath));
-        }
-        $react = file_get_contents($reactPath);
-        $js = file_get_contents($componentsPath);
-
-        return new ReactJS($react, $js);
+        $helper = new React();
     }
 
     /**
