@@ -2,9 +2,9 @@
 
 namespace Siad007\ZF2\ReactJsModule\Model;
 
-use Zend\View\Renderer\PhpRenderer;
+use Zend\View\Model\ViewModel;
 
-class ReactModel extends PhpRenderer
+class ReactModel extends ViewModel
 {
     /**
      * @param string $component Name of component
