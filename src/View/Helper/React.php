@@ -2,6 +2,7 @@
 
 namespace Siad007\ZF2\ReactJsModule\Renderer;
 
+use Siad007\ZF2\ReactJsModule\Exception\ComponentNotRenderedException;
 use Zend\View\Helper\AbstractHelper;
 
 class React extends AbstractHelper
@@ -9,11 +10,17 @@ class React extends AbstractHelper
     /** @var ReactRenderer $renderer */
     private $renderer;
 
-    private $wrapper = 'div';
+    private $tag = 'div';
 
-    public function __construct($renderer)
+    /**
+     * @var array
+     */
+    private $componentsJs = [];
+
+    public function __construct(ReactRenderer $renderer, $wrapperTag = 'div')
     {
         $this->renderer = $renderer;
+        $this->tag = $wrapperTag;
     }
 
     /**
@@ -34,8 +41,35 @@ class React extends AbstractHelper
         return sprintf($this->getWrapper(), $containerId, $this->renderer->render($componentName, $data));
     }
 
-    public function getWrapper()
+    /**
+     * Mount all components
+     *
+     * @return string
+     */
+    public function renderReactComponentsJs()
     {
-        return $this->wrapper;
+        return implode("\n", $this->componentsJs);
+    }
+
+    /**
+     * Mount a single react component
+     *
+     * @param string $componentName
+     */
+    public function renderReactComponentJs($componentName)
+    {
+        if (!isset($this->componentsJs[$componentName])) {
+            throw new ComponentNotRenderedException(
+                'You must render a component before it can be mounted.'
+            );
+        }
+        return $this->componentsJs[$componentName];
+    }
+    /**
+     * @return string
+     */
+    protected function getWrapper()
+    {
+        return "<$this->tag id=\"%s\">%s</$this->tag>";
     }
 }

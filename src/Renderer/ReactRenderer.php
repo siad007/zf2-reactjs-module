@@ -2,9 +2,7 @@
 
 namespace Siad007\ZF2\ReactJsModule\Renderer;
 
-use Zend\View\Renderer\PhpRenderer;
-
-class ReactRenderer extends PhpRenderer
+class ReactRenderer
 {
     /**
      * @var AdapterInterface

@@ -14,7 +14,7 @@ class Module implements ServiceProviderInterface, ViewHelperProviderInterface
     {
         return [
             'factories' => [
-                Renderer\ReactRenderer::class => Service\ViewReactRendererFactory::class
+                Renderer\ReactRenderer::class => Renderer\ReactJsFactory::class
             ]
         ];
     }
