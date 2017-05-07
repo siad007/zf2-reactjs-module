@@ -2,8 +2,8 @@
 
 return [
     'zf2reactjsmodule' => [
-        'react_path' => '',        // required
-        'components_path' => '',   // required
+        'react_path' => 'js/react',        // required
+        'components_path' => 'js/react/components',   // required
         'render_method' => 'v8js', // or 'external'
         'render_url' => '',
         'renderer' => '',
