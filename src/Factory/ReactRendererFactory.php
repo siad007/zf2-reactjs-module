@@ -44,7 +44,7 @@ class ReactRendererFactory implements FactoryInterface
             }
 
 
-        } elseif ('v8js' !== $config['zf2reactjsmodule']['render_method']) {
+        } elseif ('v8js' === $config['zf2reactjsmodule']['render_method']) {
 
         } else {
             throw new InvalidConfigurationException('You must set the "render_method" key to either "v8js" or "external".');
