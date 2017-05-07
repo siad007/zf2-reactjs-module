@@ -3,11 +3,8 @@
 namespace Siad007\ZF2\ReactJsModule;
 
 use Siad007\ZF2\ReactJsModule\Service\ReactRendererStrategyFactory;
-use Siad007\ZF2\ReactJsModule\Strategy\ReactRendererStrategy;
-use Zend\EventManager\EventInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
-use Zend\Mvc\MvcEvent;
 
 class Module implements ConfigProviderInterface, ServiceProviderInterface
 {
