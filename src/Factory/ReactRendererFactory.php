@@ -5,7 +5,9 @@ namespace Siad007\ZF2\ReactJsModule\Factory;
 use ReactJS;
 use Siad007\ZF2\ReactJsModule\Exception\InvalidConfigurationException;
 use Siad007\ZF2\ReactJsModule\Exception\FileNotReadableException;
+use Siad007\ZF2\ReactJsModule\Renderer\ExternalAdapter;
 use Siad007\ZF2\ReactJsModule\Renderer\ReactRenderer;
+use Siad007\ZF2\ReactJsModule\Renderer\V8jsAdapter;
 use Zend\ServiceManager\FactoryInterface;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -42,15 +44,14 @@ class ReactRendererFactory implements FactoryInterface
                     'You must set the "render_url" key if "render_method" is "external".'
                 );
             }
-
-
+            $adapter = new ExternalAdapter();
         } elseif ('v8js' === $config['zf2reactjsmodule']['render_method']) {
-
+            $adapter = new V8jsAdapter($container->get(ReactJS::class));
         } else {
             throw new InvalidConfigurationException('You must set the "render_method" key to either "v8js" or "external".');
         }
 
-        return new ReactRenderer($container->get(ReactAdapter::class));
+        return new ReactRenderer($adapter);
     }
 
     /**
