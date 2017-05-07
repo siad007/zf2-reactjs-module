@@ -30,12 +30,12 @@ class ReactJsFactory implements FactoryInterface
 
         $config = $container->get('config');
 
-        $reactPath = isset($config['view_helper_config']['zf2reactjsmodule']['react_path'])
-            ? $config['view_helper_config']['zf2reactjsmodule']['react_path']
+        $reactPath = isset($config['zf2reactjsmodule']['react_path'])
+            ? $config['zf2reactjsmodule']['react_path']
             : null;
 
-        $componentsPath = isset($config['view_helper_config']['zf2reactjsmodule']['components_path'])
-            ? $config['view_helper_config']['zf2reactjsmodule']['components_path']
+        $componentsPath = isset($config['zf2reactjsmodule']['components_path'])
+            ? $config['zf2reactjsmodule']['components_path']
             : null;
 
         if (!is_readable($reactPath)) {
