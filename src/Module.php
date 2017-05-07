@@ -5,7 +5,6 @@ namespace Siad007\ZF2\ReactJsModule;
 use Siad007\ZF2\ReactJsModule\Service\ReactRendererStrategyFactory;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
-use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
 class Module implements ConfigProviderInterface, ServiceProviderInterface
 {
