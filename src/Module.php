@@ -3,6 +3,7 @@
 namespace Siad007\ZF2\ReactJsModule;
 
 use Siad007\ZF2\ReactJsModule\Factory\ReactViewHelperFactory;
+use Siad007\ZF2\ReactJsModule\Renderer\ReactRenderer;
 use Siad007\ZF2\ReactJsModule\View\Helper\React;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
@@ -19,7 +20,8 @@ class Module implements ServiceProviderInterface, ViewHelperProviderInterface
     {
         return [
             'factories' => [
-                Renderer\ReactRenderer::class => Factory\ReactJsFactory::class
+                \ReactJS::class => Factory\ReactJsFactory::class,
+                ReactRenderer::class => Factory\ReactRendererFactory::class
             ]
         ];
     }
@@ -36,7 +38,7 @@ class Module implements ServiceProviderInterface, ViewHelperProviderInterface
             'aliases' => [
                 'react' => React::class
             ],
-            'invokables' => [
+            'factories' => [
                 React::class => ReactViewHelperFactory::class
             ]
         ];
