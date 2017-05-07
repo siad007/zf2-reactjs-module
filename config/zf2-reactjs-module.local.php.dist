@@ -2,6 +2,13 @@
 
 return [
     'zf2reactjsmodule' => [
-
+        'react_path' => '',        // required
+        'components_path' => '',   // required
+        'render_method' => 'v8js', // or 'external'
+        'render_url' => '',
+        'renderer' => '',
+        'client' => '',
+        'external_adapter' => '',
+        'v8js_adapter' => ''
     ],
 ];
