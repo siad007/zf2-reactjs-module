@@ -35,17 +35,4 @@ class Module implements ConfigProviderInterface, ServiceProviderInterface
             ]
         ];
     }
-
-    public function onBootstrap(EventInterface $e)
-    {
-        /** @var MvcEvent $e */
-        $sharedEvents = $e->getApplication()->getEventManager()->getSharedManager();
-        $sm = $e->getApplication()->getServiceManager();
-
-        $sharedEvents->attach(__NAMESPACE__, MvcEvent::EVENT_DISPATCH, function($e) use ($sm) {
-            $strategy = $sm->get(ReactRendererStrategy::class);
-            $view     = $sm->get('ViewManager')->getView();
-            $strategy->attach($view->getEventManager());
-        }, 100);
-    }
 }
